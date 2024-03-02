@@ -28,6 +28,12 @@ window.addEventListener("load", function () {
 
         setTimeout(() => {
           tile.style.opacity = "0.35";
+          tile.addEventListener("mouseenter", function () {
+            tile.style.opacity = "1";
+          });
+          tile.addEventListener("mouseleave", function () {
+            tile.style.opacity = "35%";
+          });
         }, 700);
       }
     });
