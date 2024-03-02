@@ -70,7 +70,7 @@ window.addEventListener("load", function () {
       localStorage.setItem("simonSaysHighScore", highScore);
     }
 
-    highScoreDisplay.textContent = `High Score: ${highScore}`;
+    highScoreDisplay.textContent = highScore;
   }
 
   function restartGame(message) {
@@ -108,6 +108,8 @@ window.addEventListener("load", function () {
               startNewLevel();
             }, 1000);
           } else {
+            const audio = new Audio(audioFiles.gameWin);
+            audio.play();
             restartGame("You win!");
             updateHighScore();
           }
@@ -117,6 +119,8 @@ window.addEventListener("load", function () {
         audio.play();
 
         setTimeout(() => {
+          const audio = new Audio(audioFiles.gameOver);
+          audio.play();
           restartGame("Game Over");
         }, 1000);
       }
