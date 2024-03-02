@@ -6,18 +6,29 @@ window.addEventListener("load", function () {
   const tiles = document.querySelectorAll(".tile");
 
   const colors = ["green", "red", "blue", "yellow"];
+  const audioFiles = {
+    blue: "sounds/blue.mp3",
+    red: "sounds/red.mp3",
+    yellow: "sounds/yellow.mp3",
+    green: "sounds/green.mp3",
+    gameOver: "sounds/game-over.wav",
+    gameWin: "sounds/game-win.wav",
+    wrong: "sounds/wrong.mp3",
+  };
   let randomColorIndex = Math.floor(Math.random() * colors.length);
   let randomColor = colors[randomColorIndex];
 
   function lightUpTile(color) {
     tiles.forEach((tile) => {
       if (tile.classList.contains(color)) {
-        // If the tile has the specified color, light it up
         tile.style.opacity = "1";
 
+        const audio = new Audio(audioFiles[color]);
+        audio.play();
+
         setTimeout(() => {
-          tile.style.opacity = "0.35"; // 35% opacity
-        }, 700); // Adjust the time according to your preference
+          tile.style.opacity = "0.35";
+        }, 700);
       }
     });
   }
@@ -40,7 +51,8 @@ window.addEventListener("load", function () {
       if (tile.classList.contains(randomColor)) {
         console.log("Correct");
       } else {
-        console.log("Wrong");
+        const audio = new Audio(audioFiles.wrong);
+        audio.play();
       }
     });
   });
