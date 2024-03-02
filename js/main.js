@@ -2,6 +2,7 @@ window.addEventListener("load", function () {
   const play = document.getElementById("play");
   const info = document.getElementById("info");
   const levelDisplay = document.getElementById("level");
+  const highScoreDisplay = document.getElementById("high-score");
   const btnPlay = document.getElementById("play");
   const board = document.querySelector(".board");
   const tiles = document.querySelectorAll(".tile");
@@ -10,7 +11,8 @@ window.addEventListener("load", function () {
   const text = "Make it to 12 to win!";
   let sequence = [];
   let currentLevel = 0;
-  const maxLevel = 1;
+  let highScore = localStorage.getItem("simonSaysHighScore") || 0;
+  const maxLevel = 12;
   const audioFiles = {
     blue: "sounds/blue.mp3",
     red: "sounds/red.mp3",
@@ -62,13 +64,22 @@ window.addEventListener("load", function () {
     playSequence();
   }
 
+  function updateHighScore() {
+    if (currentLevel > highScore) {
+      highScore = currentLevel;
+      localStorage.setItem("simonSaysHighScore", highScore);
+    }
+
+    highScoreDisplay.textContent = `High Score: ${highScore}`;
+  }
+
   function restartGame(message) {
     currentLevel = 0;
     sequence = [];
     levelDisplay.textContent = "";
     info.textContent = message;
     setTimeout(() => {
-      info.textContent = "";
+      info.textContent = "Click play to start! Make it to 12 to win!";
       btnPlay.style.visibility = "visible";
     }, 2000);
 
@@ -92,11 +103,13 @@ window.addEventListener("load", function () {
 
         if (sequence.length === 0) {
           if (currentLevel < maxLevel) {
+            updateHighScore();
             setTimeout(() => {
               startNewLevel();
             }, 1000);
           } else {
             restartGame("You win!");
+            updateHighScore();
           }
         }
       } else {
