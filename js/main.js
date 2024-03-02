@@ -37,9 +37,10 @@ window.addEventListener("load", function () {
 
   tiles.forEach((tile) => {
     tile.addEventListener("click", function () {
-      console.log("clicked", randomColor);
-      if (tiles.style.opacity !== "0.35") {
-        tiles.style.opacity = "0.35";
+      if (tile.classList.contains(randomColor)) {
+        console.log("Correct");
+      } else {
+        console.log("Wrong");
       }
     });
   });
